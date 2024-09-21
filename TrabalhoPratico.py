@@ -88,7 +88,6 @@ def insertionSort(array):
 def menu():
     nomeAlgoritmo = []
     tamanhoVetor = []
-    tipoVetor = []
     tempoExecucao = []
 
     tipoVetorDicionario = {
@@ -104,6 +103,9 @@ def menu():
         opcao2 = input("Escolha ordenação da array (1-3): ")
         array = criarArray(opcao2, tamanho)
 
+        """for i in range(0, len(array)):
+            print(array[i])"""
+
         print("1 - Bubble Sort sem melhorias\n2 - Bubble Sort com melhorias\n3 - Quick Sort com pivô elemento inicial\n4 - Quick Sort com pivô elemento central\n5 - Insertion Sort\n6 - Shell Sort\n7 - Selection Sort\n8 - Heap Sort\n9 - Merge Sort\n10 - Sair")
 
         opcao3 = input("Escolha uma opcao (1-10): ")
@@ -112,98 +114,96 @@ def menu():
             #Adicionado as listas os parâmetros de execução
             nomeAlgoritmo.append("Bubble Sort sem melhorias")
             tamanhoVetor.append(len(array))
-            tipoVetor.append(tipoVetorDicionario[int(opcao2)])
 
             inicio = default_timer()
+
             bubbleSort(array)
+            """for i in range(0, len(array)):
+                print(array[i])"""
             final = default_timer()
             tempoExecucao.append(final - inicio)
+            print(final - inicio)
             
         elif opcao3 == '2':
             nomeAlgoritmo.append("Bubble Sort com melhorias")
             tamanhoVetor.append(len(array))
-            tipoVetor.append(tipoVetorDicionario[int(opcao2)])
 
             inicio = default_timer()
             bubbleSortMelhoria(array)
             final = default_timer()
-            tempoExecucacao.append(final - inicio)
+            tempoExecucao.append(final - inicio)
+            print(final - inicio)
 
         elif opcao3 == '3':
             nomeAlgoritmo.append("Quick Sort com pivô elemento inicial")
             tamanhoVetor.append(len(array))
-            tipoVetor.append(tipoVetorDicionario[int(opcao2)])
 
             inicio = default_timer()
             quickSortPivoInicio(array)
             final = default_timer()
-            tempoExecucacao.append(final - inicio)
+            tempoExecucao.append(final - inicio)
 
         elif opcao3 == '4':
             nomeAlgoritmo.append("Quick Sort com pivô elemento central")
             tamanhoVetor.append(len(array))
-            tipoVetor.append(tipoVetorDicionario[int(opcao2)])
 
             inicio = default_timer()
             quickSortPivoCentral(array)
             final = default_timer()
-            tempoExecucacao.append(final - inicio)
+            tempoExecucao.append(final - inicio)
         elif opcao3 == '5':
             nomeAlgoritmo.append("Insertion Sort")
             tamanhoVetor.append(len(array))
-            tipoVetor.append(tipoVetorDicionario[int(opcao2)])
 
             inicio = default_timer()
             insertionSort(array)
             final = default_timer()
-            tempoExecucacao.append(final - inicio)
+            tempoExecucao.append(final - inicio)
 
         elif opcao3 == '6':
             nomeAlgoritmo.append("Shell Sort")
             tamanhoVetor.append(len(array))
-            tipoVetor.append(tipoVetorDicionario[int(opcao2)])
 
             inicio = default_timer()
             #Insira Shell Sort
             final = default_timer()
-            tempoExecucacao.append(final - inicio)
+            tempoExecucao.append(final - inicio)
 
         elif opcao3 == '7':
             nomeAlgoritmo.append("Selection Sort")
             tamanhoVetor.append(len(array))
-            tipoVetor.append(tipoVetorDicionario[int(opcao2)])
 
             inicio = default_timer()
             #Insira Selection Sort
             final = default_timer()
-            tempoExecucacao.append(final - inicio)
+            tempoExecucao.append(final - inicio)
 
         elif opcao3 == '8':
             nomeAlgoritmo.append("Heap Sort")
             tamanhoVetor.append(len(array))
-            tipoVetor.append(tipoVetorDicionario[int(opcao2)])
 
             inicio = default_timer()
             #Insira Heap Sort
             final = default_timer()
-            tempoExecucacao.append(final - inicio)
+            tempoExecucao.append(final - inicio)
 
         elif opcao3 == '9':
             nomeAlgoritmo.append("Merge Sort")
             tamanhoVetor.append(len(array))
-            tipoVetor.append(tipoVetorDicionario[int(opcao2)])
 
             inicio = default_timer()
             #Insira Merge Sort
             final = default_timer()
-            tempoExecucacao.append(final - inicio)
+            tempoExecucao.append(final - inicio)
 
         elif opcao3 == '10':
             print("Saindo")
-            dicionario = {'Nome Algoritmo': nomeAlgoritmo, 'Tamanho Vetor': tamanhoVetor, 'Tipo Vetor': tipoVetor, 'tempoExecucao': tempoExecucao}
+            dicionario = {'Algoritmo': nomeAlgoritmo, 'tempoExecucao': tempoExecucao, 'Tamanho Vetor': tamanhoVetor}
             df = pandas.DataFrame(dicionario)
             print(df)
-            df.to_csv('Resultados.csv')
+            nomeArquivo = 'Resultado' + tipoVetorDicionario[int(opcao2)] + '.csv'
+            df.to_csv(nomeArquivo)
+            return nomeArquivo
             break
         else:
             print("Opção inválida")
@@ -242,6 +242,9 @@ if __name__ == "__main__":
     
     #for i in range(0, len(array)):
     #    print(array[i])
-    menu()
-    pandas.read_csv('Resultados.csv').plot()
+    nomeArquivo = menu()
+    df = pandas.read_csv(nomeArquivo)
+    df.plot(x = 'Tamanho Vetor', y = 'tempoExecucao', kind = 'line', title = 'Tempo de Execução X Tamanho Vetor')
+    plt.xlabel('Tamanho Vetor')
+    plt.ylabel('Tempo de Execucação (Segundos)')
     plt.show()
