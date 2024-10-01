@@ -84,6 +84,40 @@ def insertionSort(array):
             i -= 1
         array[i+1] = y
 
+<<<<<<< Updated upstream
+=======
+#Transcrição código slides
+def SelectionSort(array):
+    for i in range(len(array)):
+        menor = array[i]
+        index = i
+        for j in range(i + 1, len(array)):
+            if array[j] < menor:
+                menor = array[j]
+                index = j
+        array[index] = array[i]
+        array[i] = menor
+
+#Transcrição código slides aula5 - parte 2
+def  insertionSort(array):
+    tamanho = len(array)
+    for i in range(1, tamanho, +1):
+        y = array[i]
+        j = i - 1
+        while j >= 0 and array[j] > y:
+            array[j+1] = array[j]
+            j -= 1
+        array[j + 1] = y
+
+
+#Código de impressão de array
+def printArrayFull(array):
+    np.set_printoptions(threshold=np.inf)
+    print(array)
+    np.set_printoptions(threshold=len(array))
+
+
+>>>>>>> Stashed changes
 #Escrever no CSV o tempo de execução de cada algoritmo, o tamanho da array e a organização dos valores
 def menu():
     nomeAlgoritmo = []
@@ -210,7 +244,7 @@ def menu():
 
 def tamanhoArray(opcao):
     if opcao == '1':
-        return 1000
+        return 10001
     elif opcao == '2':
         return 5000
     elif opcao == '3':
