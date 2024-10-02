@@ -1,0 +1,7 @@
+,Algoritmo,tempoExecucao,Tamanho Vetor
+0,Insertion Sort,0.07839999999850988,1000
+1,Insertion Sort,1.688150899950415,5000
+2,Insertion Sort,6.4987229000544176,10000
+3,Insertion Sort,14.533717999933288,15000
+4,Insertion Sort,26.813918900093995,20000
+5,Insertion Sort,40.09066200000234,25000

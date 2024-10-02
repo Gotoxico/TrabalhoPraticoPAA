@@ -84,6 +84,24 @@ def insertionSort(array):
             i -= 1
         array[i+1] = y
 
+#Transcrição do código do slide
+def shellSort(array, n, increments, numinc):
+    incr = 0, j, k, span, y
+
+    while incr < numinc:
+        span = increments[incr]
+        j = span
+        while j < n:
+            y = array[j]
+            k = j - span
+            while k >= 0:
+                array[k + span] = array[k]
+                k-=span
+            array[k + span] = y
+            j += 1
+        incr += incr
+
+
 #Escrever no CSV o tempo de execução de cada algoritmo, o tamanho da array e a organização dos valores
 def menu():
     nomeAlgoritmo = []
@@ -159,15 +177,17 @@ def menu():
             insertionSort(array)
             final = default_timer()
             tempoExecucao.append(final - inicio)
+            print(final - inicio)
 
         elif opcao3 == '6':
             nomeAlgoritmo.append("Shell Sort")
             tamanhoVetor.append(len(array))
-
+            
             inicio = default_timer()
             #Insira Shell Sort
             final = default_timer()
             tempoExecucao.append(final - inicio)
+            print(final - inicio)
 
         elif opcao3 == '7':
             nomeAlgoritmo.append("Selection Sort")
