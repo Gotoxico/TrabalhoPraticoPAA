@@ -1,0 +1,4 @@
+,Algoritmo,tempoExecucao,Tamanho Vetor
+0,Quick Sort com pivô elemento inicial,0.004114599898457527,1000
+1,Quick Sort com pivô elemento inicial,0.03500290005467832,10000
+2,Quick Sort com pivô elemento inicial,0.09701010002754629,25000
