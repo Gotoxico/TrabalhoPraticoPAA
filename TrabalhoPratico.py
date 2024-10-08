@@ -304,7 +304,7 @@ def menu():
             dicionario = {'Algoritmo': nomeAlgoritmo, 'tempoExecucao': tempoExecucao, 'Tamanho Vetor': tamanhoVetor}
             df = pandas.DataFrame(dicionario)
             print(df)
-            nomeArquivo = 'Resultado' + tipoVetorDicionario[int(opcao2)] + '.csv'
+            nomeArquivo = 'C:\\Users\\user\\OneDrive - Unesp\\Documentos\\GitHub\\TrabalhoPraticoPAA\\CSVs\\' + 'Resultado' + tipoVetorDicionario[int(opcao2)] + '.csv'
             df.to_csv(nomeArquivo)
             return nomeArquivo
             break
