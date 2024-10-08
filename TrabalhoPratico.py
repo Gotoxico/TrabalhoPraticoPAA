@@ -25,29 +25,36 @@ def bubbleSortMelhoria(array):
         if(alterou == False):
             break
 
-#Transcrição código slides
 def particaoPivoInicio(array, limiteInferior, limiteSuperior):
     pivo = array[limiteInferior]
-    baixo = limiteInferior
+    baixo = limiteInferior + 1  # Começa a partir do próximo elemento após o pivô
     alto = limiteSuperior
 
-    while baixo < alto:
-        while baixo < limiteSuperior and array[baixo] <= pivo:
+    while True:
+        # Movimenta o ponteiro baixo para a direita
+        while baixo <= limiteSuperior and array[baixo] <= pivo:
             baixo += 1
-        while limiteInferior < alto and array[alto] > pivo:
+
+        # Movimenta o ponteiro alto para a esquerda
+        while alto >= limiteInferior and array[alto] > pivo:
             alto -= 1
-        if baixo <= alto:
+
+        if baixo < alto:
+            # Troca os valores
             array[baixo], array[alto] = array[alto], array[baixo]
+        else:
+            break
 
+    # Coloca o pivô no local correto
     array[limiteInferior], array[alto] = array[alto], array[limiteInferior]
-    return alto   
+    return alto
 
-#Transcrição código slides
 def quickSortPivoInicio(array, limiteInferior, limiteSuperior):
     if limiteInferior < limiteSuperior:
         q = particaoPivoInicio(array, limiteInferior, limiteSuperior)
         quickSortPivoInicio(array, limiteInferior, q - 1)
-        quickSortPivoInicio(array, q + 1, limiteSuperior) 
+        quickSortPivoInicio(array, q + 1, limiteSuperior)
+
 
 #Pequenas modificações ao código dos slides
 def particaoPivoCentral(array, limiteInferior, limiteSuperior):
@@ -86,20 +93,46 @@ def insertionSort(array):
 
 #Transcrição do código do slide
 def shellSort(array, n, increments, numinc):
-    incr = 0, j, k, span, y
-
-    while incr < numinc:
+    span = j = incr = 0
+    for incr in range(numinc):
         span = increments[incr]
-        j = span
-        while j < n:
-            y = array[j]
-            k = j - span
-            while k >= 0:
-                array[k + span] = array[k]
-                k-=span
-            array[k + span] = y
-            j += 1
-        incr += incr
+        for i in range(span, n):
+            temp = array[i]
+            j = i
+            while j >= span and array[j - span] > temp:
+                array[j] = array[j - span]
+                j -= span
+            array[j] = temp
+
+def gerar_array_teorema1_formacao(tamanho):
+    """Gera o array do Teorema 1 seguindo a lei de formação: 2^k - 1."""
+    array = []
+    k = 1
+    while True:
+        valor = 2 ** k - 1
+        if k == tamanho:
+            break
+        array.append(valor)
+        k += 1
+    return array
+
+def gerar_array_teorema2_formacao(tamanho):
+    """Gera o array do Teorema 2 seguindo a lei de formação: 2^p * 3^q."""
+    array = set()
+    p = 0
+    while True:
+        q = 0
+        while True:
+            valor = 2 ** p * 3 ** q
+            if valor >= tamanho:
+                break
+            array.add(valor)
+            q += 1
+        if 2 ** p >= tamanho:
+            break
+        p += 1
+    return sorted(array)
+    
 
 
 #Escrever no CSV o tempo de execução de cada algoritmo, o tamanho da array e a organização dos valores
@@ -157,18 +190,20 @@ def menu():
             tamanhoVetor.append(len(array))
 
             inicio = default_timer()
-            quickSortPivoInicio(array)
+            quickSortPivoInicio(array, 0, len(array)-1)
             final = default_timer()
             tempoExecucao.append(final - inicio)
+            print(final - inicio)
 
         elif opcao3 == '4':
             nomeAlgoritmo.append("Quick Sort com pivô elemento central")
             tamanhoVetor.append(len(array))
 
             inicio = default_timer()
-            quickSortPivoCentral(array)
+            quickSortPivoCentral(array, 0, len(array)-1)
             final = default_timer()
             tempoExecucao.append(final - inicio)
+            print(final - inicio)
         elif opcao3 == '5':
             nomeAlgoritmo.append("Insertion Sort")
             tamanhoVetor.append(len(array))
@@ -182,9 +217,23 @@ def menu():
         elif opcao3 == '6':
             nomeAlgoritmo.append("Shell Sort")
             tamanhoVetor.append(len(array))
+
+            teorema = 0
+            while teorema < 1 or teorema > 2:
+                teorema = int(input('Digite se será utilizidado o teorema 1 ou 2 de formação do array de incrementos (1 ou 2): '))
+
+            increments = []
+            if teorema == 1:
+                increments = gerar_array_teorema1_formacao(8)
+                print("Vetor do Teorema 1:\n", increments)
+            elif teorema == 2:
+                increments = gerar_array_teorema2_formacao(20)
+                print("Vetor do Teorema 2:\n", increments)
             
+
             inicio = default_timer()
             #Insira Shell Sort
+            shellSort(array, len(array), increments, len(increments))
             final = default_timer()
             tempoExecucao.append(final - inicio)
             print(final - inicio)
