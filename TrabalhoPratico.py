@@ -2,6 +2,7 @@ from numpy import random
 from timeit import default_timer
 import pandas
 import matplotlib.pyplot as plt
+from math import floor
 
 #Tradução código do geeksforgeeks "https://www.geeksforgeeks.org/bubble-sort-algorithm/"
 def bubbleSort(array):
@@ -133,7 +134,51 @@ def gerar_array_teorema2_formacao(tamanho):
         p += 1
     return sorted(array)
     
+def mergeSort(array, esquerda, direita):
+    meio = 0
+    if esquerda < direita:
+        meio = (esquerda + direita) // 2
+        mergeSort(array, esquerda, meio)
+        mergeSort(array, meio + 1, direita)
+        merge(array, esquerda, meio, direita)
+        
+def merge(array, esquerda, meio, direita):
+    tamanhoEsquerda = meio - esquerda + 1
+    tamanhoDireita = direita - meio
 
+    arrayEsquerda = [0] * tamanhoEsquerda
+    arrayDireita = [0] * tamanhoDireita
+
+    for i in range(tamanhoEsquerda):
+        arrayEsquerda[i] = array[esquerda + i]
+
+    for j in range(tamanhoDireita):
+        arrayDireita[j] = array[meio + 1 + j]
+
+    i = 0
+    j = 0
+    k = esquerda
+
+    while i < tamanhoEsquerda and j < tamanhoDireita:
+        if arrayEsquerda[i] <= arrayDireita[j]:
+            array[k] = arrayEsquerda[i]
+            i = i + 1
+
+        else:
+            array[k] = arrayDireita[j]
+            j = j + 1
+
+        k = k + 1
+
+    while i < tamanhoEsquerda:
+        array[k] = arrayEsquerda[i]
+        i = i + 1
+        k = k + 1
+
+    while j < tamanhoDireita:
+        array[k] = arrayDireita[j]
+        j = j + 1
+        k = k + 1
 
 #Escrever no CSV o tempo de execução de cada algoritmo, o tamanho da array e a organização dos valores
 def menu():
@@ -153,6 +198,7 @@ def menu():
         print("1 - Aleatório\n2 - Crescente\n3 - Decrescente")
         opcao2 = input("Escolha ordenação da array (1-3): ")
         array = criarArray(opcao2, tamanho)
+        arrayOrdenadoMerge = []
 
         """for i in range(0, len(array)):
             print(array[i])"""
@@ -261,9 +307,12 @@ def menu():
             tamanhoVetor.append(len(array))
 
             inicio = default_timer()
-            #Insira Merge Sort
+            mergeSort(array, 0, len(array) - 1)
+            for i in range(0, len(array)):
+                print(array[i])
             final = default_timer()
             tempoExecucao.append(final - inicio)
+            print(final - inicio)
 
         elif opcao3 == '10':
             print("Saindo")
