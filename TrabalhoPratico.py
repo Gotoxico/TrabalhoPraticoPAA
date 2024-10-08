@@ -91,8 +91,6 @@ def insertionSort(array):
             i -= 1
         array[i+1] = y
 
-<<<<<<< Updated upstream
-=======
 #Transcrição código slides
 def SelectionSort(array):
     for i in range(len(array)):
@@ -124,7 +122,6 @@ def printArrayFull(array):
     np.set_printoptions(threshold=len(array))
 
 
->>>>>>> Stashed changes
 #Transcrição do código do slide
 def shellSort(array, n, increments, numinc):
     span = j = incr = 0
@@ -278,8 +275,10 @@ def menu():
 
             inicio = default_timer()
             #Insira Selection Sort
+            SelectionSort(array)
             final = default_timer()
             tempoExecucao.append(final - inicio)
+            print(final - inicio)
 
         elif opcao3 == '8':
             nomeAlgoritmo.append("Heap Sort")
@@ -304,7 +303,7 @@ def menu():
             dicionario = {'Algoritmo': nomeAlgoritmo, 'tempoExecucao': tempoExecucao, 'Tamanho Vetor': tamanhoVetor}
             df = pandas.DataFrame(dicionario)
             print(df)
-            nomeArquivo = 'C:\\Users\\user\\OneDrive - Unesp\\Documentos\\GitHub\\TrabalhoPraticoPAA\\CSVs\\' + 'Resultado' + tipoVetorDicionario[int(opcao2)] + '.csv'
+            nomeArquivo = 'C:\\Users\\kauan\\OneDrive\\Área de Trabalho\\Unesp-Loche\\segundo ano\\Segundo Semestre\\POOII - Escola\\TrabalhoPraticoPAA\\CSVs\\' + 'Resultado' + tipoVetorDicionario[int(opcao2)] + nomeAlgoritmo[0] + '.csv'
             df.to_csv(nomeArquivo)
             return nomeArquivo
             break
