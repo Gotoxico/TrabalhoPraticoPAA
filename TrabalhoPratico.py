@@ -1,4 +1,5 @@
-from numpy import random
+import numpy as np
+import random
 from timeit import default_timer
 import pandas
 import matplotlib.pyplot as plt
@@ -116,10 +117,12 @@ def  insertionSort(array):
 
 
 #Código de impressão de array
+#printar sem \n
 def printArrayFull(array):
-    np.set_printoptions(threshold=np.inf)
-    print(array)
-    np.set_printoptions(threshold=len(array))
+    for i in range(0, len(array)):
+        print('{}, '.format(array[i]), end='')
+
+
 
 
 #Transcrição do código do slide
@@ -164,6 +167,44 @@ def gerar_array_teorema2_formacao(tamanho):
         p += 1
     return sorted(array)
     
+
+#Função para transforma array em hesp maximo
+def heapify(array, n , i):
+    """
+    :param array: O array a ser modificado
+    :param n: O tamanho do heap
+    :param i: O índice atual a ser ajustado
+    """
+    maior = i
+    esquerda = 2* i + 1 # Filho à esquerda
+    direita = 2 * i + 2 #Filho à direita
+
+    # Se o filho à esquerda existe e é maior que a raiz
+    if esquerda < n and array[esquerda] > array[maior]:
+        maior = esquerda
+
+    #Se o filho à direita existe e é maior que a raiz atual
+    if direita < n and array[direita] > array[maior]:
+        maior = direita
+
+    # Se o maior não for a raiz
+    if maior != i:
+        array[i], array[maior] = array[maior], array[i]  # Troca
+        heapify(array, n, maior)  # Recursivamente aplica o heapify na subárvore afetada
+
+#Ordenação por Heap Sort
+def heap_sort(array):
+    n = len(array)
+
+    # Constrói o heap (reorganiza o array)
+    for i in range(n // 2 - 1, -1, -1):
+        heapify(array, n, i)
+
+    # Extrai os elementos um por um
+    for i in range(n - 1, 0, -1):
+        array[i], array[0] = array[0], array[i]  # Troca
+        heapify(array, i, 0)
+
 
 
 #Escrever no CSV o tempo de execução de cada algoritmo, o tamanho da array e a organização dos valores
@@ -286,8 +327,11 @@ def menu():
 
             inicio = default_timer()
             #Insira Heap Sort
+            heap_sort(array)
             final = default_timer()
             tempoExecucao.append(final - inicio)
+            print(final - inicio)
+            print('{}\n\n'.format(array))
 
         elif opcao3 == '9':
             nomeAlgoritmo.append("Merge Sort")
@@ -312,7 +356,7 @@ def menu():
 
 def tamanhoArray(opcao):
     if opcao == '1':
-        return 10001
+        return 1000
     elif opcao == '2':
         return 5000
     elif opcao == '3':
@@ -327,14 +371,18 @@ def tamanhoArray(opcao):
 def criarArray(opcao, tamanho):
     array = []
     if opcao == '1':
-        return random.randint(tamanho, size=(tamanho))
+        for i in range(tamanho): # Gera `tamanho` números únicos entre 0 e `tamanho - 1`
+            array.append(i)
+
+        random.shuffle(array)                        
+        return array
     elif opcao == '2':
         for i in range(0, tamanho):
-            array.append(i)
+            array.add(i)
         return array
     else:
         for i in range(tamanho, 0, -1):
-            array.append(i)
+            array.add(i)
         return array
 
 if __name__ == "__main__":
