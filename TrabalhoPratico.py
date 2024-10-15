@@ -208,23 +208,20 @@ def heap_sort(array):
 
 
 #Escrever no CSV o tempo de execução de cada algoritmo, o tamanho da array e a organização dos valores
-def menu():
-    nomeAlgoritmo = []
+def menu(opcao, tipo):
+    nomeAlgoritmo = ''
     tamanhoVetor = []
     tempoExecucao = []
-
+    i = 1
     tipoVetorDicionario = {
         1 : 'Aleatório',
         2 : 'Crescente',
         3 : 'Decrescente'
     }
     while True:
-        print("1 - 1000\n2 - 5000\n3 - 10000\n4 - 15000\n5 - 20000\n6 - 25000\n")
-        opcao = input("Escolha um tamanho para a array (1-6): ")
-        tamanho = tamanhoArray(opcao)
-        print("1 - Aleatório\n2 - Crescente\n3 - Decrescente")
-        opcao2 = input("Escolha ordenação da array (1-3): ")
-        array = criarArray(opcao2, tamanho)
+        tamanhoArray = i * 1000
+        array = criarArray(tamanhoArray, tipo)
+        arrayOrdenadoMerge = []
 
         """for i in range(0, len(array)):
             print(array[i])"""
@@ -235,7 +232,7 @@ def menu():
         
         if opcao3 == '1':
             #Adicionado as listas os parâmetros de execução
-            nomeAlgoritmo.append("Bubble Sort sem melhorias")
+            nomeAlgoritmo = "Bubble Sort sem melhorias"
             tamanhoVetor.append(len(array))
 
             inicio = default_timer()
@@ -385,6 +382,19 @@ def criarArray(opcao, tamanho):
             array.add(i)
         return array
 
+
+
+def menuDeExecucao():
+    print("\n\nINICIO DA EXECUCAO\n\n")
+    print("1 - Bubble Sort sem melhorias\n2 - Bubble Sort com melhorias\n3 - Quick Sort com pivô elemento inicial\n4 - Quick Sort com pivô elemento central\n5 - Insertion Sort\n6 - Shell Sort\n7 - Selection Sort\n8 - Heap Sort\n9 - Merge Sort\n10 - Sair\n")
+    opcao = int(input("Escolha qual algoritmo será executado: "))
+
+    print("1 - Aleatório\n2 - Crescente\n3 - Decrescente\n")
+    aleatorio = int(input("Escolha o tipo de array: "))
+    return opcao, aleatorio
+
+
+
 if __name__ == "__main__":
     #print(pandas.read_csv('data.csv').info())
     #pandas.read_csv('data.csv').plot()
@@ -392,9 +402,15 @@ if __name__ == "__main__":
     
     #for i in range(0, len(array)):
     #    print(array[i])
-    nomeArquivo = menu()
-    df = pandas.read_csv(nomeArquivo)
-    df.plot(x = 'Tamanho Vetor', y = 'tempoExecucao', kind = 'line', title = 'Tempo de Execução X Tamanho Vetor')
-    plt.xlabel('Tamanho Vetor')
-    plt.ylabel('Tempo de Execucação (Segundos)')
-    plt.show()
+    opcao = 0
+    aleatorio = 0
+    opcao, aleatorio = menuDeExecucao()
+
+    print('{}, {}'.format(opcao, aleatorio))
+    
+    # nomeArquivo = menu()
+    # df = pandas.read_csv(nomeArquivo)
+    # df.plot(x = 'Tamanho Vetor', y = 'tempoExecucao', kind = 'line', title = 'Tempo de Execução X Tamanho Vetor')
+    # plt.xlabel('Tamanho Vetor')
+    # plt.ylabel('Tempo de Execucação (Segundos)')
+    # plt.show()
