@@ -3,6 +3,8 @@ import random
 from timeit import default_timer
 import pandas
 import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
+
 
 #Tradução código do geeksforgeeks "https://www.geeksforgeeks.org/bubble-sort-algorithm/"
 def bubbleSort(array):
@@ -265,8 +267,13 @@ def menu(opcao, tipo):
         2 : 'Crescente',
         3 : 'Decrescente'
     }
+    tamanhoArray = 0
     while True:
-        tamanhoArray = i * 1000000
+        
+        tamanhoArray = i  * 100
+        # if i < 10:
+        #     tamanhoArray = i * 10000
+        # else: tamanhoArray += i * 100 
         array = criarArray(tipo, tamanhoArray)
         arrayOrdenadoMerge = []
         
@@ -382,7 +389,7 @@ def menu(opcao, tipo):
             tempoExecucao.append(final - inicio)
             print(final - inicio)
 
-        if i == 10:
+        if i == 1000:
             print("Saindo")
             dicionario = {'Algoritmo': nomeAlgoritmo, 'tempoExecucao': tempoExecucao, 'Tamanho Vetor': tamanhoVetor}
             df = pandas.DataFrame(dicionario)
@@ -448,19 +455,44 @@ if __name__ == "__main__":
     opcao = 0
     aleatorio = 0
     opcao, tipo = menuDeExecucao()
-    # if opcao != 10:
-    #     print('{}, {}'.format(opcao, aleatorio))
-    #     nomeArquivo = menu(opcao , tipo)
-    #     df = pandas.read_csv(nomeArquivo)
-    #     df.plot(x = 'Tamanho Vetor', y = 'tempoExecucao', kind = 'line', title = 'Tempo de Execução X Tamanho Vetor')
-    #     plt.xlabel('Tamanho Vetor')
-    #     plt.ylabel('Tempo de Execucação (Segundos)')
-    #     plt.show()
+    if opcao != 10:
+        print('{}, {}'.format(opcao, aleatorio))
+        nomeArquivo = menu(opcao , tipo)
+        df = pandas.read_csv(nomeArquivo)
+        df.plot(x = 'Tamanho Vetor', y = 'tempoExecucao', kind = 'line', title = 'Tempo de Execução X Tamanho Vetor')
+        plt.xlabel('Tamanho Vetor')
+        plt.ylabel('Tempo de Execucação (Segundos)')
+        plt.show()
+        plt.savefig() # Salva a imagem do gráfico em um arquivo
 
     
     df = pandas.read_csv('C:\\Users\\kauan\\OneDrive\\Área de Trabalho\\Unesp-Loche\\segundo ano\\Segundo Semestre\\POOII - Escola\\TrabalhoPraticoPAA\\CSVs\\ResultadoDecrescenteHeap Sort.csv')
-    df.plot(x = 'Tamanho Vetor', y = 'tempoExecucao', kind = 'line', title = 'Tempo de Execução X Tamanho Vetor')              
+    # Cria o modelo de regressão linear
+    X = df['Tamanho Vetor'].values.reshape(-1, 1)
+    y = df['tempoExecucao'].values
+
+    # Cria o modelo de regressão linear
+    modelo = LinearRegression()
+    modelo.fit(X, y)
+
+    # Gera os valores preditos (reta)
+    y_pred = modelo.predict(X)
+
+    # Plota o gráfico original
+    plt.plot(df['Tamanho Vetor'], df['tempoExecucao'], label='Dados Originais')
+
+    # Plota a reta de regressão linear
+    plt.plot(df['Tamanho Vetor'], y_pred, color='red', label='Regressão Linear')
+
+    # Adiciona rótulos e título
     plt.xlabel('Tamanho Vetor')
-    plt.ylabel('Tempo de Execucação (Segundos)')
+    plt.ylabel('Tempo de Execução (Segundos)')
+    plt.title('Tempo de Execução X Tamanho Vetor')
+    plt.legend()
+
+    # Exibe o gráfico
     plt.show()
+
+    # Salva o gráfico se necessário
+    plt.savefig('grafico_regressao_linear.png')
 
