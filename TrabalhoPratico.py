@@ -1,4 +1,5 @@
-from numpy import random
+import numpy as np
+import random
 from timeit import default_timer
 import pandas
 import matplotlib.pyplot as plt
@@ -6,6 +7,8 @@ from math import floor
 #import sys
 
 #sys.setrecursionlimit(1000000)
+from sklearn.linear_model import LinearRegression
+
 
 #Tradução código do geeksforgeeks "https://www.geeksforgeeks.org/bubble-sort-algorithm/"
 def bubbleSort(array):
@@ -167,6 +170,39 @@ def insertionSort(array):
             i -= 1
         array[i+1] = y
 
+#Transcrição código slides
+def SelectionSort(array):
+    for i in range(len(array)):
+        menor = array[i]
+        index = i
+        for j in range(i + 1, len(array)):
+            if array[j] < menor:
+                menor = array[j]
+                index = j
+        array[index] = array[i]
+        array[i] = menor
+
+#Transcrição código slides aula5 - parte 2
+def  insertionSort(array):
+    tamanho = len(array)
+    for i in range(1, tamanho, +1):
+        y = array[i]
+        j = i - 1
+        while j >= 0 and array[j] > y:
+            array[j+1] = array[j]
+            j -= 1
+        array[j + 1] = y
+
+
+#Código de impressão de array
+#printar sem \n
+def printArrayFull(array):
+    for i in range(0, len(array)):
+        print('{}, '.format(array[i]), end='')
+
+
+
+
 #Transcrição do código do slide
 def shellSort(array, n, increments, numinc):
     span = j = incr = 0
@@ -221,6 +257,56 @@ def merge(array, esquerda, meio, direita):
     tamanhoEsquerda = meio - esquerda + 1
     tamanhoDireita = direita - meio
 
+#Função para transforma array em hesp maximo
+def heapify(array, n , i):
+    """
+    :param array: O array a ser modificado
+    :param n: O tamanho do heap
+    :param i: O índice atual a ser ajustado
+    """
+    maior = i
+    esquerda = 2* i + 1 # Filho à esquerda
+    direita = 2 * i + 2 #Filho à direita
+
+    # Se o filho à esquerda existe e é maior que a raiz
+    if esquerda < n and array[esquerda] > array[maior]:
+        maior = esquerda
+
+    #Se o filho à direita existe e é maior que a raiz atual
+    if direita < n and array[direita] > array[maior]:
+        maior = direita
+
+    # Se o maior não for a raiz
+    if maior != i:
+        array[i], array[maior] = array[maior], array[i]  # Troca
+        heapify(array, n, maior)  # Recursivamente aplica o heapify na subárvore afetada
+
+#Ordenação por Heap Sort
+def heap_sort(array):
+    n = len(array)
+
+    # Constrói o heap (reorganiza o array)
+    for i in range(n // 2 - 1, -1, -1):
+        heapify(array, n, i)
+
+    # Extrai os elementos um por um
+    for i in range(n - 1, 0, -1):
+        array[i], array[0] = array[0], array[i]  # Troca
+        heapify(array, i, 0)
+
+    
+def mergeSort(array, esquerda, direita):
+    meio = 0
+    if esquerda < direita:
+        meio = (esquerda + direita) // 2
+        mergeSort(array, esquerda, meio)
+        mergeSort(array, meio + 1, direita)
+        merge(array, esquerda, meio, direita)
+        
+def merge(array, esquerda, meio, direita):
+    tamanhoEsquerda = meio - esquerda + 1
+    tamanhoDireita = direita - meio
+
     arrayEsquerda = [0] * tamanhoEsquerda
     arrayDireita = [0] * tamanhoDireita
 
@@ -255,36 +341,32 @@ def merge(array, esquerda, meio, direita):
         j = j + 1
         k = k + 1
 
+
+
 #Escrever no CSV o tempo de execução de cada algoritmo, o tamanho da array e a organização dos valores
-def menu():
-    #print(sys.getrecursionlimit())
-    nomeAlgoritmo = []
+def menu(opcao, tipo):
+    nomeAlgoritmo = ''
     tamanhoVetor = []
     tempoExecucao = []
-
+    i = 1
     tipoVetorDicionario = {
         1 : 'Aleatório',
         2 : 'Crescente',
         3 : 'Decrescente'
     }
+    tamanhoArray = 0
     while True:
-        print("1 - 1000\n2 - 5000\n3 - 10000\n4 - 15000\n5 - 20000\n6 - 25000\n")
-        opcao = input("Escolha um tamanho para a array (1-6): ")
-        tamanho = tamanhoArray(opcao)
-        print("1 - Aleatório\n2 - Crescente\n3 - Decrescente")
-        opcao2 = input("Escolha ordenação da array (1-3): ")
-        array = criarArray(opcao2, tamanho)
-
-        for i in range(0, len(array)):
-            print(array[i])
-
-        print("1 - Bubble Sort sem melhorias\n2 - Bubble Sort com melhorias\n3 - Quick Sort com pivô elemento inicial\n4 - Quick Sort com pivô elemento central\n5 - Insertion Sort\n6 - Shell Sort\n7 - Selection Sort\n8 - Heap Sort\n9 - Merge Sort\n10 - Sair")
-
-        opcao3 = input("Escolha uma opcao (1-10): ")
         
-        if opcao3 == '1':
+        tamanhoArray = i  * 100
+        # if i < 10:
+        #     tamanhoArray = i * 10000
+        # else: tamanhoArray += i * 100 
+        array = criarArray(tipo, tamanhoArray)
+        arrayOrdenadoMerge = []
+        
+        if opcao == '1':
             #Adicionado as listas os parâmetros de execução
-            nomeAlgoritmo.append("Bubble Sort sem melhorias")
+            nomeAlgoritmo = "Bubble Sort sem melhorias"
             tamanhoVetor.append(len(array))
 
             inicio = default_timer()
@@ -293,10 +375,10 @@ def menu():
                 print(array[i])
             final = default_timer()
             tempoExecucao.append(final - inicio)
-            print(final - inicio)
+            print(final - inicio, end='')
             
-        elif opcao3 == '2':
-            nomeAlgoritmo.append("Bubble Sort com melhorias")
+        elif opcao == '2':
+            nomeAlgoritmo = "Bubble Sort com melhorias"
             tamanhoVetor.append(len(array))
 
             inicio = default_timer()
@@ -305,10 +387,10 @@ def menu():
                 print(array[i])
             final = default_timer()
             tempoExecucao.append(final - inicio)
-            print(final - inicio)
+            print(final - inicio, end='')
 
-        elif opcao3 == '3':
-            nomeAlgoritmo.append("Quick Sort com pivô elemento inicial")
+        elif opcao == '3':
+            nomeAlgoritmo = "Quick Sort com pivô elemento inicial"
             tamanhoVetor.append(len(array))
 
             inicio = default_timer()
@@ -318,10 +400,10 @@ def menu():
                 print(array[i])
             final = default_timer()
             tempoExecucao.append(final - inicio)
-            print(final - inicio)
+            print(final - inicio, end='')
 
-        elif opcao3 == '4':
-            nomeAlgoritmo.append("Quick Sort com pivô elemento central")
+        elif opcao == '4':
+            nomeAlgoritmo = "Quick Sort com pivô elemento central"
             tamanhoVetor.append(len(array))
 
             inicio = default_timer()
@@ -331,9 +413,9 @@ def menu():
                 print(array[i])
             final = default_timer()
             tempoExecucao.append(final - inicio)
-            print(final - inicio)
-        elif opcao3 == '5':
-            nomeAlgoritmo.append("Insertion Sort")
+            print(final - inicio, end='')
+        elif opcao == '5':
+            nomeAlgoritmo = "Insertion Sort"
             tamanhoVetor.append(len(array))
 
             inicio = default_timer()
@@ -342,10 +424,10 @@ def menu():
                 print(array[i])
             final = default_timer()
             tempoExecucao.append(final - inicio)
-            print(final - inicio)
+            print(final - inicio, end='')
 
-        elif opcao3 == '6':
-            nomeAlgoritmo.append("Shell Sort")
+        elif opcao == '6':
+            nomeAlgoritmo = "Shell Sort"
             tamanhoVetor.append(len(array))
 
             teorema = 0
@@ -368,52 +450,54 @@ def menu():
                 print(array[i])
             final = default_timer()
             tempoExecucao.append(final - inicio)
-            print(final - inicio)
+            print(final - inicio, end='')
 
-        elif opcao3 == '7':
-            nomeAlgoritmo.append("Selection Sort")
+        elif opcao == '7':
+            nomeAlgoritmo = "Selection Sort"
             tamanhoVetor.append(len(array))
 
             inicio = default_timer()
             #Insira Selection Sort
-            for i in range(0, len(array)):
-                print(array[i])
+            SelectionSort(array)
             final = default_timer()
             tempoExecucao.append(final - inicio)
+            print(final - inicio, end='')
 
-        elif opcao3 == '8':
-            nomeAlgoritmo.append("Heap Sort")
+        elif opcao == '8':
+            nomeAlgoritmo = "Heap Sort"
             tamanhoVetor.append(len(array))
 
             inicio = default_timer()
             #Insira Heap Sort
-            
+            heap_sort(array)
             final = default_timer()
             tempoExecucao.append(final - inicio)
+            print(final - inicio, end='')
+            # print('{}\n\n'.format(array))
 
-        elif opcao3 == '9':
-            nomeAlgoritmo.append("Merge Sort")
+        elif opcao == '9':
+            nomeAlgoritmo = "Merge Sort"
             tamanhoVetor.append(len(array))
 
             inicio = default_timer()
             mergeSort(array, 0, len(array) - 1)
-            for i in range(0, len(array)):
-                print(array[i])
+            # for i in range(0, len(array)):
+            #     print(array[i])
             final = default_timer()
             tempoExecucao.append(final - inicio)
             print(final - inicio)
 
-        elif opcao3 == '10':
+        if i == 1000:
             print("Saindo")
             dicionario = {'Algoritmo': nomeAlgoritmo, 'tempoExecucao': tempoExecucao, 'Tamanho Vetor': tamanhoVetor}
             df = pandas.DataFrame(dicionario)
             print(df)
-            nomeArquivo = 'C:\\Users\\user\\OneDrive - Unesp\\Documentos\\GitHub\\TrabalhoPraticoPAA\\CSVs\\' + 'Resultado' + tipoVetorDicionario[int(opcao2)] + '.csv'
+            nomeArquivo = 'C:\\Users\\kauan\\OneDrive\\Área de Trabalho\\Unesp-Loche\\segundo ano\\Segundo Semestre\\POOII - Escola\\TrabalhoPraticoPAA\\CSVs\\' + 'Resultado' + tipoVetorDicionario[int(tipo)] + nomeAlgoritmo + '.csv'
             df.to_csv(nomeArquivo)
             return nomeArquivo
-            break
-        else:
-            print("Opção inválida")
+        print(' ({})'.format(i))
+        i += 1
+       
 
 def tamanhoArray(opcao):
     if opcao == '1':
@@ -432,9 +516,10 @@ def tamanhoArray(opcao):
 def criarArray(opcao, tamanho):
     array = []
     if opcao == '1':
-        for i in range(0, tamanho):
+        for i in range(tamanho): # Gera `tamanho` números únicos entre 0 e `tamanho - 1`
             array.append(i)
-        random.shuffle(array)
+
+        random.shuffle(array)                        
         return array
     elif opcao == '2':
         for i in range(0, tamanho):
@@ -445,16 +530,18 @@ def criarArray(opcao, tamanho):
             array.append(i)
         return array
 
-def scriptTeste():
 
 
-    nomeArquivo = menu()
-    df = pandas.read_csv(nomeArquivo)
-    df.plot(x = 'Tamanho Vetor', y = 'tempoExecucao', kind = 'line', title = 'Tempo de Execução X Tamanho Vetor')
-    plt.xlabel('Tamanho Vetor')
-    plt.ylabel('Tempo de Execucação (Segundos)')
-    plt.show()
-    
+def menuDeExecucao():
+    print("\n\nINICIO DA EXECUCAO\n\n")
+    print("1 - Bubble Sort sem melhorias\n2 - Bubble Sort com melhorias\n3 - Quick Sort com pivô elemento inicial\n4 - Quick Sort com pivô elemento central\n5 - Insertion Sort\n6 - Shell Sort\n7 - Selection Sort\n8 - Heap Sort\n9 - Merge Sort\n10 - Sair\n")
+    opcao = input("Escolha qual algoritmo será executado: ")
+
+    print("1 - Aleatório\n2 - Crescente\n3 - Decrescente\n")
+    aleatorio = input("Escolha o tipo de array: ")
+    return opcao, aleatorio
+
+
 
 if __name__ == "__main__":
     #print(pandas.read_csv('data.csv').info())
@@ -463,9 +550,47 @@ if __name__ == "__main__":
     
     #for i in range(0, len(array)):
     #    print(array[i])
-    nomeArquivo = menu()
-    df = pandas.read_csv(nomeArquivo)
-    df.plot(x = 'Tamanho Vetor', y = 'tempoExecucao', kind = 'line', title = 'Tempo de Execução X Tamanho Vetor')
+    opcao = 0
+    aleatorio = 0
+    opcao, tipo = menuDeExecucao()
+    if opcao != 10:
+        print('{}, {}'.format(opcao, aleatorio))
+        nomeArquivo = menu(opcao , tipo)
+        df = pandas.read_csv(nomeArquivo)
+        df.plot(x = 'Tamanho Vetor', y = 'tempoExecucao', kind = 'line', title = 'Tempo de Execução X Tamanho Vetor')
+        plt.xlabel('Tamanho Vetor')
+        plt.ylabel('Tempo de Execucação (Segundos)')
+        plt.show()
+        plt.savefig() # Salva a imagem do gráfico em um arquivo
+
+    
+    df = pandas.read_csv('C:\\Users\\kauan\\OneDrive\\Área de Trabalho\\Unesp-Loche\\segundo ano\\Segundo Semestre\\POOII - Escola\\TrabalhoPraticoPAA\\CSVs\\ResultadoDecrescenteHeap Sort.csv')
+    # Cria o modelo de regressão linear
+    X = df['Tamanho Vetor'].values.reshape(-1, 1)
+    y = df['tempoExecucao'].values
+
+    # Cria o modelo de regressão linear
+    modelo = LinearRegression()
+    modelo.fit(X, y)
+
+    # Gera os valores preditos (reta)
+    y_pred = modelo.predict(X)
+
+    # Plota o gráfico original
+    plt.plot(df['Tamanho Vetor'], df['tempoExecucao'], label='Dados Originais')
+
+    # Plota a reta de regressão linear
+    plt.plot(df['Tamanho Vetor'], y_pred, color='red', label='Regressão Linear')
+
+    # Adiciona rótulos e título
     plt.xlabel('Tamanho Vetor')
-    plt.ylabel('Tempo de Execucação (Segundos)')
+    plt.ylabel('Tempo de Execução (Segundos)')
+    plt.title('Tempo de Execução X Tamanho Vetor')
+    plt.legend()
+
+    # Exibe o gráfico
     plt.show()
+
+    # Salva o gráfico se necessário
+    plt.savefig('grafico_regressao_linear.png')
+
