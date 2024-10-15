@@ -198,10 +198,9 @@ def menu():
         print("1 - Aleatório\n2 - Crescente\n3 - Decrescente")
         opcao2 = input("Escolha ordenação da array (1-3): ")
         array = criarArray(opcao2, tamanho)
-        arrayOrdenadoMerge = []
 
-        """for i in range(0, len(array)):
-            print(array[i])"""
+        for i in range(0, len(array)):
+            print(array[i])
 
         print("1 - Bubble Sort sem melhorias\n2 - Bubble Sort com melhorias\n3 - Quick Sort com pivô elemento inicial\n4 - Quick Sort com pivô elemento central\n5 - Insertion Sort\n6 - Shell Sort\n7 - Selection Sort\n8 - Heap Sort\n9 - Merge Sort\n10 - Sair")
 
@@ -213,10 +212,9 @@ def menu():
             tamanhoVetor.append(len(array))
 
             inicio = default_timer()
-
             bubbleSort(array)
-            """for i in range(0, len(array)):
-                print(array[i])"""
+            for i in range(0, len(array)):
+                print(array[i])
             final = default_timer()
             tempoExecucao.append(final - inicio)
             print(final - inicio)
@@ -227,6 +225,8 @@ def menu():
 
             inicio = default_timer()
             bubbleSortMelhoria(array)
+            for i in range(0, len(array)):
+                print(array[i])
             final = default_timer()
             tempoExecucao.append(final - inicio)
             print(final - inicio)
@@ -237,6 +237,8 @@ def menu():
 
             inicio = default_timer()
             quickSortPivoInicio(array, 0, len(array)-1)
+            for i in range(0, len(array)):
+                print(array[i])
             final = default_timer()
             tempoExecucao.append(final - inicio)
             print(final - inicio)
@@ -247,6 +249,8 @@ def menu():
 
             inicio = default_timer()
             quickSortPivoCentral(array, 0, len(array)-1)
+            for i in range(0, len(array)):
+                print(array[i])
             final = default_timer()
             tempoExecucao.append(final - inicio)
             print(final - inicio)
@@ -256,6 +260,8 @@ def menu():
 
             inicio = default_timer()
             insertionSort(array)
+            for i in range(0, len(array)):
+                print(array[i])
             final = default_timer()
             tempoExecucao.append(final - inicio)
             print(final - inicio)
@@ -280,6 +286,8 @@ def menu():
             inicio = default_timer()
             #Insira Shell Sort
             shellSort(array, len(array), increments, len(increments))
+            for i in range(0, len(array)):
+                print(array[i])
             final = default_timer()
             tempoExecucao.append(final - inicio)
             print(final - inicio)
@@ -290,6 +298,8 @@ def menu():
 
             inicio = default_timer()
             #Insira Selection Sort
+            for i in range(0, len(array)):
+                print(array[i])
             final = default_timer()
             tempoExecucao.append(final - inicio)
 
@@ -299,6 +309,7 @@ def menu():
 
             inicio = default_timer()
             #Insira Heap Sort
+            
             final = default_timer()
             tempoExecucao.append(final - inicio)
 
@@ -343,7 +354,10 @@ def tamanhoArray(opcao):
 def criarArray(opcao, tamanho):
     array = []
     if opcao == '1':
-        return random.randint(tamanho, size=(tamanho))
+        for i in range(0, tamanho):
+            array.append(i)
+        random.shuffle(array)
+        return array
     elif opcao == '2':
         for i in range(0, tamanho):
             array.append(i)
@@ -352,6 +366,17 @@ def criarArray(opcao, tamanho):
         for i in range(tamanho, 0, -1):
             array.append(i)
         return array
+
+def scriptTeste():
+
+
+    nomeArquivo = menu()
+    df = pandas.read_csv(nomeArquivo)
+    df.plot(x = 'Tamanho Vetor', y = 'tempoExecucao', kind = 'line', title = 'Tempo de Execução X Tamanho Vetor')
+    plt.xlabel('Tamanho Vetor')
+    plt.ylabel('Tempo de Execucação (Segundos)')
+    plt.show()
+    
 
 if __name__ == "__main__":
     #print(pandas.read_csv('data.csv').info())
