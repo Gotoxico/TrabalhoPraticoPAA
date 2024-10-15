@@ -3,6 +3,9 @@ from timeit import default_timer
 import pandas
 import matplotlib.pyplot as plt
 from math import floor
+#import sys
+
+#sys.setrecursionlimit(1000000)
 
 #Tradução código do geeksforgeeks "https://www.geeksforgeeks.org/bubble-sort-algorithm/"
 def bubbleSort(array):
@@ -48,7 +51,7 @@ def particaoPivoInicio(array, limiteInferior, limiteSuperior):
 
     # Coloca o pivô no local correto
     array[limiteInferior], array[alto] = array[alto], array[limiteInferior]
-    return alto
+    return alto     
 
 def quickSortPivoInicio(array, limiteInferior, limiteSuperior):
     if limiteInferior < limiteSuperior:
@@ -56,6 +59,47 @@ def quickSortPivoInicio(array, limiteInferior, limiteSuperior):
         quickSortPivoInicio(array, limiteInferior, q - 1)
         quickSortPivoInicio(array, q + 1, limiteSuperior)
 
+def particaoPivoInicioStack(array, limiteInferior, limiteSuperior):
+    pivo = array[limiteInferior]
+    baixo = limiteInferior + 1  # Começa a partir do próximo elemento após o pivô
+    alto = limiteSuperior
+
+    while True:
+        # Movimenta o ponteiro baixo para a direita
+        while baixo <= limiteSuperior and array[baixo] <= pivo:
+            baixo += 1
+
+        # Movimenta o ponteiro alto para a esquerda
+        while alto >= limiteInferior and array[alto] > pivo:
+            alto -= 1
+
+        if baixo < alto:
+            # Troca os valores
+            array[baixo], array[alto] = array[alto], array[baixo]
+        else:
+            break
+
+    # Coloca o pivô no local correto
+    array[limiteInferior], array[alto] = array[alto], array[limiteInferior]
+    return alto
+
+def quickSortPivoInicioStack(array):
+    stack = []
+
+    # Inicializa a pilha com os limites do array completo
+    stack.append((0, len(array) - 1))
+
+    while stack:
+        # Pop the top of the stack, getting the limits for the subarray
+        limiteInferior, limiteSuperior = stack.pop()
+
+        if limiteInferior < limiteSuperior:
+            # Chama a partição com os limites correto
+            q = particaoPivoInicioStack(array, limiteInferior, limiteSuperior)
+
+            # Adiciona as duas partições resultantes na pilha
+            stack.append((limiteInferior, q - 1))  # Lado esquerdo
+            stack.append((q + 1, limiteSuperior))  # Lado direito
 
 #Pequenas modificações ao código dos slides
 def particaoPivoCentral(array, limiteInferior, limiteSuperior):
@@ -81,6 +125,37 @@ def quickSortPivoCentral(array, limiteInferior, limiteSuperior):
         q = particaoPivoCentral(array, limiteInferior, limiteSuperior)
         quickSortPivoCentral(array, limiteInferior, q - 1)
         quickSortPivoCentral(array, q, limiteSuperior)
+
+def particaoPivoCentralStack(array, limiteInferior, limiteSuperior):
+    pivo = array[(limiteInferior + limiteSuperior)//2]
+    baixo = limiteInferior
+    alto = limiteSuperior
+
+    while baixo <= alto:
+        while array[baixo] < pivo:
+            baixo += 1
+        while array[alto] > pivo:
+            alto -= 1
+        if baixo <= alto:
+            array[baixo], array[alto] = array[alto], array[baixo]
+            baixo += 1
+            alto -= 1
+    
+    return baixo
+
+def quickSortPivoCentralStack(array):
+    stack = []
+
+    stack.append((0, len(array) - 1))
+
+    while stack:
+        limiteInferior, limiteSuperior = stack.pop()
+
+        if limiteInferior < limiteSuperior:
+            q = particaoPivoCentralStack(array, limiteInferior, limiteSuperior)
+
+            stack.append((limiteInferior, q - 1))
+            stack.append((q, limiteSuperior))
 
 #Transcrição código slides
 def insertionSort(array):
@@ -182,6 +257,7 @@ def merge(array, esquerda, meio, direita):
 
 #Escrever no CSV o tempo de execução de cada algoritmo, o tamanho da array e a organização dos valores
 def menu():
+    #print(sys.getrecursionlimit())
     nomeAlgoritmo = []
     tamanhoVetor = []
     tempoExecucao = []
@@ -236,7 +312,8 @@ def menu():
             tamanhoVetor.append(len(array))
 
             inicio = default_timer()
-            quickSortPivoInicio(array, 0, len(array)-1)
+            print(len(array)-1)
+            quickSortPivoInicioStack(array)
             for i in range(0, len(array)):
                 print(array[i])
             final = default_timer()
@@ -248,7 +325,8 @@ def menu():
             tamanhoVetor.append(len(array))
 
             inicio = default_timer()
-            quickSortPivoCentral(array, 0, len(array)-1)
+            print(len(array)-1)
+            quickSortPivoCentralStack(array)
             for i in range(0, len(array)):
                 print(array[i])
             final = default_timer()
