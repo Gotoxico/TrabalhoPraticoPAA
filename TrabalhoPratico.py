@@ -205,6 +205,53 @@ def heap_sort(array):
         array[i], array[0] = array[0], array[i]  # Troca
         heapify(array, i, 0)
 
+    
+def mergeSort(array, esquerda, direita):
+    meio = 0
+    if esquerda < direita:
+        meio = (esquerda + direita) // 2
+        mergeSort(array, esquerda, meio)
+        mergeSort(array, meio + 1, direita)
+        merge(array, esquerda, meio, direita)
+        
+def merge(array, esquerda, meio, direita):
+    tamanhoEsquerda = meio - esquerda + 1
+    tamanhoDireita = direita - meio
+
+    arrayEsquerda = [0] * tamanhoEsquerda
+    arrayDireita = [0] * tamanhoDireita
+
+    for i in range(tamanhoEsquerda):
+        arrayEsquerda[i] = array[esquerda + i]
+
+    for j in range(tamanhoDireita):
+        arrayDireita[j] = array[meio + 1 + j]
+
+    i = 0
+    j = 0
+    k = esquerda
+
+    while i < tamanhoEsquerda and j < tamanhoDireita:
+        if arrayEsquerda[i] <= arrayDireita[j]:
+            array[k] = arrayEsquerda[i]
+            i = i + 1
+
+        else:
+            array[k] = arrayDireita[j]
+            j = j + 1
+
+        k = k + 1
+
+    while i < tamanhoEsquerda:
+        array[k] = arrayEsquerda[i]
+        i = i + 1
+        k = k + 1
+
+    while j < tamanhoDireita:
+        array[k] = arrayDireita[j]
+        j = j + 1
+        k = k + 1
+
 
 
 #Escrever no CSV o tempo de execução de cada algoritmo, o tamanho da array e a organização dos valores
@@ -219,7 +266,7 @@ def menu(opcao, tipo):
         3 : 'Decrescente'
     }
     while True:
-        tamanhoArray = i * 1000
+        tamanhoArray = i * 1000000
         array = criarArray(tipo, tamanhoArray)
         arrayOrdenadoMerge = []
         
@@ -321,18 +368,21 @@ def menu(opcao, tipo):
             final = default_timer()
             tempoExecucao.append(final - inicio)
             print(final - inicio, end='')
-            print('{}\n\n'.format(array))
+            # print('{}\n\n'.format(array))
 
         elif opcao == '9':
             nomeAlgoritmo = "Merge Sort"
             tamanhoVetor.append(len(array))
 
             inicio = default_timer()
-            #Insira Merge Sort
+            mergeSort(array, 0, len(array) - 1)
+            # for i in range(0, len(array)):
+            #     print(array[i])
             final = default_timer()
             tempoExecucao.append(final - inicio)
+            print(final - inicio)
 
-        if i == 50:
+        if i == 10:
             print("Saindo")
             dicionario = {'Algoritmo': nomeAlgoritmo, 'tempoExecucao': tempoExecucao, 'Tamanho Vetor': tamanhoVetor}
             df = pandas.DataFrame(dicionario)
@@ -368,11 +418,11 @@ def criarArray(opcao, tamanho):
         return array
     elif opcao == '2':
         for i in range(0, tamanho):
-            array.add(i)
+            array.append(i)
         return array
     else:
         for i in range(tamanho, 0, -1):
-            array.add(i)
+            array.append(i)
         return array
 
 
@@ -398,11 +448,19 @@ if __name__ == "__main__":
     opcao = 0
     aleatorio = 0
     opcao, tipo = menuDeExecucao()
-    if opcao != 10:
-        print('{}, {}'.format(opcao, aleatorio))
-        nomeArquivo = menu(opcao , tipo)
-        df = pandas.read_csv(nomeArquivo)
-        df.plot(x = 'Tamanho Vetor', y = 'tempoExecucao', kind = 'line', title = 'Tempo de Execução X Tamanho Vetor')
-        plt.xlabel('Tamanho Vetor')
-        plt.ylabel('Tempo de Execucação (Segundos)')
-        plt.show()
+    # if opcao != 10:
+    #     print('{}, {}'.format(opcao, aleatorio))
+    #     nomeArquivo = menu(opcao , tipo)
+    #     df = pandas.read_csv(nomeArquivo)
+    #     df.plot(x = 'Tamanho Vetor', y = 'tempoExecucao', kind = 'line', title = 'Tempo de Execução X Tamanho Vetor')
+    #     plt.xlabel('Tamanho Vetor')
+    #     plt.ylabel('Tempo de Execucação (Segundos)')
+    #     plt.show()
+
+    
+    df = pandas.read_csv('C:\\Users\\kauan\\OneDrive\\Área de Trabalho\\Unesp-Loche\\segundo ano\\Segundo Semestre\\POOII - Escola\\TrabalhoPraticoPAA\\CSVs\\ResultadoDecrescenteHeap Sort.csv')
+    df.plot(x = 'Tamanho Vetor', y = 'tempoExecucao', kind = 'line', title = 'Tempo de Execução X Tamanho Vetor')              
+    plt.xlabel('Tamanho Vetor')
+    plt.ylabel('Tempo de Execucação (Segundos)')
+    plt.show()
+
