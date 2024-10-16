@@ -365,8 +365,17 @@ def menu(opcao, tipo):
         array = criarArray(tipo, tamanhoArray)
         arrayOrdenadoMerge = []
     
-        
-        if opcao == '1':
+        if opcao == '0':
+            nomeAlgoritmo = "Sort python"
+            tamanhoVetor.append(len(array))
+
+            inicio = default_timer()
+            array.sort()
+            
+            final = default_timer()
+            tempoExecucao.append(final - inicio)
+            print(final - inicio, end='')
+        elif opcao == '1':
             #Adicionado as listas os parâmetros de execução
             nomeAlgoritmo = "Bubble Sort sem melhorias"
             tamanhoVetor.append(len(array))
@@ -527,7 +536,8 @@ def menuDeExecucao():
     print("\n\nINICIO DA EXECUCAO\n\n")
     print("1 - Bubble Sort sem melhorias\n2 - Bubble Sort com melhorias\n3 - Quick Sort com pivô elemento inicial\n4 - Quick Sort com pivô elemento central\n5 - Insertion Sort\n6 - Shell Sort\n7 - Selection Sort\n8 - Heap Sort\n9 - Merge Sort\n10 - Sair\n")
     opcao = input("Escolha qual algoritmo será executado: ")
-
+    if opcao == '10':
+        return 10, 0
     print("1 - Aleatório\n2 - Crescente\n3 - Decrescente\n")
     tipo = input("Escolha o tipo de array: ")
     return opcao, tipo
@@ -542,14 +552,20 @@ if __name__ == "__main__":
         2 : 'Crescente',
         3 : 'Decrescente'
     }
+    arquivos = []
     while True:    
         opcao, tipo = menuDeExecucao()
         if opcao == 10:
             break
         nomeArquivo = menu(opcao , tipo)
-        df = pandas.read_csv(nomeArquivo)
+        arquivos.append(nomeArquivo)
+    
+    for arquivo in arquivos:
+        df = pandas.read_csv(arquivo)
+        nome = df.loc[3, 'Algoritmo']
         df['Tempo de Execução'] = df['tempoExecucao'].rolling(window=5).mean()  # Ajuste o tamanho da janela 'window' conforme necessário
-        df.plot(x='Tamanho Vetor', y='Tempo de Execução', kind='line', title='Tempo de Execução Suavizado X Tamanho Vetor')
-        plt.xlabel('Tamanho Vetor')
-        plt.ylabel('Tempo de Execução (Segundos)')
-        plt.show()
+        plt.plot(df['Tamanho Vetor'], df['Tempo de Execução'], label=nome)  # Plotar os dados de cada CSV
+    plt.xlabel('Tamanho Vetor')
+    plt.ylabel('Tempo de Execução (Segundos)')
+    plt.legend()
+    plt.show()
