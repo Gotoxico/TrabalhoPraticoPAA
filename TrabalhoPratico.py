@@ -356,11 +356,9 @@ def menu(opcao, tipo):
     }
     tamanhoArray = 0
     while True:
-        
-        tamanhoArray = i  * 100
-        # if i < 10:
-        #     tamanhoArray = i * 10000
-        # else: tamanhoArray += i * 100 
+        tamanhoArray += i * 1000
+
+
         array = criarArray(tipo, tamanhoArray)
         arrayOrdenadoMerge = []
         
@@ -371,8 +369,7 @@ def menu(opcao, tipo):
 
             inicio = default_timer()
             bubbleSort(array)
-            for i in range(0, len(array)):
-                print(array[i])
+            
             final = default_timer()
             tempoExecucao.append(final - inicio)
             print(final - inicio, end='')
@@ -383,8 +380,7 @@ def menu(opcao, tipo):
 
             inicio = default_timer()
             bubbleSortMelhoria(array)
-            for i in range(0, len(array)):
-                print(array[i])
+        
             final = default_timer()
             tempoExecucao.append(final - inicio)
             print(final - inicio, end='')
@@ -396,8 +392,7 @@ def menu(opcao, tipo):
             inicio = default_timer()
             print(len(array)-1)
             quickSortPivoInicioStack(array)
-            for i in range(0, len(array)):
-                print(array[i])
+    
             final = default_timer()
             tempoExecucao.append(final - inicio)
             print(final - inicio, end='')
@@ -407,10 +402,8 @@ def menu(opcao, tipo):
             tamanhoVetor.append(len(array))
 
             inicio = default_timer()
-            print(len(array)-1)
             quickSortPivoCentralStack(array)
-            for i in range(0, len(array)):
-                print(array[i])
+        
             final = default_timer()
             tempoExecucao.append(final - inicio)
             print(final - inicio, end='')
@@ -420,8 +413,7 @@ def menu(opcao, tipo):
 
             inicio = default_timer()
             insertionSort(array)
-            for i in range(0, len(array)):
-                print(array[i])
+        
             final = default_timer()
             tempoExecucao.append(final - inicio)
             print(final - inicio, end='')
@@ -446,8 +438,7 @@ def menu(opcao, tipo):
             inicio = default_timer()
             #Insira Shell Sort
             shellSort(array, len(array), increments, len(increments))
-            for i in range(0, len(array)):
-                print(array[i])
+        
             final = default_timer()
             tempoExecucao.append(final - inicio)
             print(final - inicio, end='')
@@ -487,7 +478,7 @@ def menu(opcao, tipo):
             tempoExecucao.append(final - inicio)
             print(final - inicio)
 
-        if i == 1000:
+        if i == 15:
             print("Saindo")
             dicionario = {'Algoritmo': nomeAlgoritmo, 'tempoExecucao': tempoExecucao, 'Tamanho Vetor': tamanhoVetor}
             df = pandas.DataFrame(dicionario)
@@ -538,59 +529,27 @@ def menuDeExecucao():
     opcao = input("Escolha qual algoritmo será executado: ")
 
     print("1 - Aleatório\n2 - Crescente\n3 - Decrescente\n")
-    aleatorio = input("Escolha o tipo de array: ")
-    return opcao, aleatorio
+    tipo = input("Escolha o tipo de array: ")
+    return opcao, tipo
 
 
 
 if __name__ == "__main__":
-    #print(pandas.read_csv('data.csv').info())
-    #pandas.read_csv('data.csv').plot()
-    #plt.show()
-    
-    #for i in range(0, len(array)):
-    #    print(array[i])
     opcao = 0
-    aleatorio = 0
-    opcao, tipo = menuDeExecucao()
-    if opcao != 10:
-        print('{}, {}'.format(opcao, aleatorio))
+    tipo = 0
+    tipoVetorDicionario = {
+        1 : 'Aleatório',
+        2 : 'Crescente',
+        3 : 'Decrescente'
+    }
+    while True:    
+        opcao, tipo = menuDeExecucao()
+        if opcao == 10:
+            break
         nomeArquivo = menu(opcao , tipo)
         df = pandas.read_csv(nomeArquivo)
-        df.plot(x = 'Tamanho Vetor', y = 'tempoExecucao', kind = 'line', title = 'Tempo de Execução X Tamanho Vetor')
+        df['Tempo de Execução'] = df['tempoExecucao'].rolling(window=5).mean()  # Ajuste o tamanho da janela 'window' conforme necessário
+        df.plot(x='Tamanho Vetor', y='Tempo de Execução', kind='line', title='Tempo de Execução Suavizado X Tamanho Vetor')
         plt.xlabel('Tamanho Vetor')
-        plt.ylabel('Tempo de Execucação (Segundos)')
+        plt.ylabel('Tempo de Execução (Segundos)')
         plt.show()
-        plt.savefig() # Salva a imagem do gráfico em um arquivo
-
-    
-    df = pandas.read_csv('C:\\Users\\kauan\\OneDrive\\Área de Trabalho\\Unesp-Loche\\segundo ano\\Segundo Semestre\\POOII - Escola\\TrabalhoPraticoPAA\\CSVs\\ResultadoDecrescenteHeap Sort.csv')
-    # Cria o modelo de regressão linear
-    X = df['Tamanho Vetor'].values.reshape(-1, 1)
-    y = df['tempoExecucao'].values
-
-    # Cria o modelo de regressão linear
-    modelo = LinearRegression()
-    modelo.fit(X, y)
-
-    # Gera os valores preditos (reta)
-    y_pred = modelo.predict(X)
-
-    # Plota o gráfico original
-    plt.plot(df['Tamanho Vetor'], df['tempoExecucao'], label='Dados Originais')
-
-    # Plota a reta de regressão linear
-    plt.plot(df['Tamanho Vetor'], y_pred, color='red', label='Regressão Linear')
-
-    # Adiciona rótulos e título
-    plt.xlabel('Tamanho Vetor')
-    plt.ylabel('Tempo de Execução (Segundos)')
-    plt.title('Tempo de Execução X Tamanho Vetor')
-    plt.legend()
-
-    # Exibe o gráfico
-    plt.show()
-
-    # Salva o gráfico se necessário
-    plt.savefig('grafico_regressao_linear.png')
-
