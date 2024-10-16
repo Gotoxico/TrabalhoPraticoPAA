@@ -5,6 +5,7 @@ import pandas
 import matplotlib.pyplot as plt
 from math import floor
 from scipy.interpolate import make_interp_spline
+import time
 
 #import sys
 
@@ -348,7 +349,6 @@ def merge(array, esquerda, meio, direita):
 #Escrever no CSV o tempo de execução de cada algoritmo, o tamanho da array e a organização dos valores
 def menu(opcao, tipo):
     nomeAlgoritmo = ''
-    tamanhoVetor = []
     tempoExecucao = []
     i = 1
     tipoVetorDicionario = {
@@ -356,6 +356,7 @@ def menu(opcao, tipo):
         2 : 'Crescente',
         3 : 'Decrescente'
     }
+    tamanhoVetor = []
     tamanhoArray = 0
     while True:
         tamanhoArray += i * 1000
@@ -363,6 +364,7 @@ def menu(opcao, tipo):
 
         array = criarArray(tipo, tamanhoArray)
         arrayOrdenadoMerge = []
+    
         
         if opcao == '1':
             #Adicionado as listas os parâmetros de execução
@@ -392,7 +394,6 @@ def menu(opcao, tipo):
             tamanhoVetor.append(len(array))
 
             inicio = default_timer()
-            print(len(array)-1)
             quickSortPivoInicioStack(array)
     
             final = default_timer()
@@ -424,17 +425,14 @@ def menu(opcao, tipo):
             nomeAlgoritmo = "Shell Sort"
             tamanhoVetor.append(len(array))
 
-            teorema = 0
-            while teorema < 1 or teorema > 2:
-                teorema = int(input('Digite se será utilizidado o teorema 1 ou 2 de formação do array de incrementos (1 ou 2): '))
-
             increments = []
+            if i == 1:
+                teorema = int(input('Digite se será utilizidado o teorema 1 ou 2 de formação do array de incrementos (1 ou 2): '))
+ 
             if teorema == 1:
                 increments = gerar_array_teorema1_formacao(8)
-                print("Vetor do Teorema 1:\n", increments)
             elif teorema == 2:
                 increments = gerar_array_teorema2_formacao(20)
-                print("Vetor do Teorema 2:\n", increments)
             
 
             inicio = default_timer()
