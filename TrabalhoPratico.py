@@ -431,7 +431,7 @@ def menu(opcao, tipo):
             print(final - inicio, end='')
 
         elif opcao == '6':
-            nomeAlgoritmo = "Shell Sort"
+            nomeAlgoritmo = "Shell Sort Teorema 2"
             tamanhoVetor.append(len(array))
 
             increments = []
@@ -492,7 +492,7 @@ def menu(opcao, tipo):
             dicionario = {'Algoritmo': nomeAlgoritmo, 'tempoExecucao': tempoExecucao, 'Tamanho Vetor': tamanhoVetor}
             df = pandas.DataFrame(dicionario)
             print(df)
-            nomeArquivo = 'C:\\Users\\user\\OneDrive - Unesp\\Documentos\\GitHub\\TrabalhoPraticoPAA\\CSVs\\' + 'Resultado' + tipoVetorDicionario[int(tipo)] + nomeAlgoritmo + '.csv'
+            nomeArquivo = 'C:\\Users\\user\\OneDrive - Unesp\\Documentos\\GitHub\\TrabalhoPraticoPAA\\CSVs\\' + 'Resultado' + tipoVetorDicionario[int(tipo)] + nomeAlgoritmo + 'Teorema1' + '.csv'
             df.to_csv(nomeArquivo)
             return nomeArquivo
         print(' ({})'.format(i))
