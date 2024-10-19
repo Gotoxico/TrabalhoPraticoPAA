@@ -361,7 +361,6 @@ def menu(opcao, tipo):
     while True:
         tamanhoArray += i * 1000
 
-
         array = criarArray(tipo, tamanhoArray)
         arrayOrdenadoMerge = []
     
@@ -492,7 +491,7 @@ def menu(opcao, tipo):
             dicionario = {'Algoritmo': nomeAlgoritmo, 'tempoExecucao': tempoExecucao, 'Tamanho Vetor': tamanhoVetor}
             df = pandas.DataFrame(dicionario)
             print(df)
-            nomeArquivo = 'C:\\Users\\user\\OneDrive - Unesp\\Documentos\\GitHub\\TrabalhoPraticoPAA\\CSVs\\' + 'Resultado' + tipoVetorDicionario[int(tipo)] + nomeAlgoritmo + 'Teorema1' + '.csv'
+            nomeArquivo = 'C:\\Users\\user\\OneDrive - Unesp\\Documentos\\GitHub\\TrabalhoPraticoPAA\\CSVs\\' + 'Resultado' + tipoVetorDicionario[int(tipo)] + nomeAlgoritmo + '.csv'
             df.to_csv(nomeArquivo)
             return nomeArquivo
         print(' ({})'.format(i))
@@ -545,6 +544,7 @@ def menuDeExecucao():
 
 
 if __name__ == "__main__":
+    '''
     opcao = 0
     tipo = 0
     tipoVetorDicionario = {
@@ -568,4 +568,18 @@ if __name__ == "__main__":
     plt.xlabel('Tamanho Vetor')
     plt.ylabel('Tempo de Execução (Segundos)')
     plt.legend()
+    plt.show()'''
+    
+    df = pandas.read_csv("C:\\Users\\rodri\\OneDrive - Unesp\\Documentos\\GitHub\\TrabalhoPraticoPAA\\CSVs\\ShellSortTeorema2\\ResultadoDecrescenteShell Sort Teorema 2.csv")
+    plt.figure(figsize=(10, 6))
+    plt.plot(df['Tamanho Vetor'], df['tempoExecucao'], marker='o', linestyle='-', color='b', label='Shell Sort Teorema 2')
+
+    # Adding labels and title
+    plt.xlabel('Tamanho do Vetor', fontsize=12)
+    plt.ylabel('Tempo de Execução (segundos)', fontsize=12)
+    plt.title('Desempenho do Shell Sort Teorema 2', fontsize=14)
+    plt.legend()
+
+    # Show the plot
+    plt.grid(True)
     plt.show()
