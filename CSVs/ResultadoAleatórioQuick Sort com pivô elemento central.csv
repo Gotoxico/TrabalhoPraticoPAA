@@ -1,16 +1,11 @@
 ,Algoritmo,tempoExecucao,Tamanho Vetor
-0,Quick Sort com pivô elemento central,0.0019952000002376735,1000
-1,Quick Sort com pivô elemento central,0.004307299997890368,3000
-2,Quick Sort com pivô elemento central,0.007445299997925758,6000
-3,Quick Sort com pivô elemento central,0.012147999979788437,10000
-4,Quick Sort com pivô elemento central,0.01761040001292713,15000
-5,Quick Sort com pivô elemento central,0.027928499999688938,21000
-6,Quick Sort com pivô elemento central,0.04537610002444126,28000
-7,Quick Sort com pivô elemento central,0.05627770000137389,36000
-8,Quick Sort com pivô elemento central,0.055898900027386844,45000
-9,Quick Sort com pivô elemento central,0.09383210001396947,55000
-10,Quick Sort com pivô elemento central,0.10942490000161342,66000
-11,Quick Sort com pivô elemento central,0.1305753999913577,78000
-12,Quick Sort com pivô elemento central,0.157328300003428,91000
-13,Quick Sort com pivô elemento central,0.1824581999971997,105000
-14,Quick Sort com pivô elemento central,0.2103491999732796,120000
+0,Quick Sort com pivô elemento central,0.0011004999978467822,1000
+1,Quick Sort com pivô elemento central,0.0028581999940797687,3000
+2,Quick Sort com pivô elemento central,0.008138099976349622,6000
+3,Quick Sort com pivô elemento central,0.010993700008839369,10000
+4,Quick Sort com pivô elemento central,0.03180389999761246,15000
+5,Quick Sort com pivô elemento central,0.02675749998888932,21000
+6,Quick Sort com pivô elemento central,0.03716060001170263,28000
+7,Quick Sort com pivô elemento central,0.04968140000710264,36000
+8,Quick Sort com pivô elemento central,0.08566020001308061,45000
+9,Quick Sort com pivô elemento central,0.0836016999965068,55000

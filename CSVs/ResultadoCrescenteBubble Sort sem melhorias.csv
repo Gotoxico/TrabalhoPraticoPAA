@@ -1,0 +1,11 @@
+,Algoritmo,tempoExecucao,Tamanho Vetor
+0,Bubble Sort sem melhorias,0.019062700012000278,1000
+1,Bubble Sort sem melhorias,0.24428689999331255,3000
+2,Bubble Sort sem melhorias,1.0214842000132194,6000
+3,Bubble Sort sem melhorias,2.834017400004086,10000
+4,Bubble Sort sem melhorias,6.2249237000069115,15000
+5,Bubble Sort sem melhorias,12.32361690000107,21000
+6,Bubble Sort sem melhorias,22.136865199994645,28000
+7,Bubble Sort sem melhorias,36.73657130000356,36000
+8,Bubble Sort sem melhorias,57.46184309999808,45000
+9,Bubble Sort sem melhorias,85.45654229998763,55000

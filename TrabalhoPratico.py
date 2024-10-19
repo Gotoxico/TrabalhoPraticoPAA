@@ -487,12 +487,12 @@ def menu(opcao, tipo):
             tempoExecucao.append(final - inicio)
             print(final - inicio)
 
-        if i == 15:
+        if i == 10:
             print("Saindo")
             dicionario = {'Algoritmo': nomeAlgoritmo, 'tempoExecucao': tempoExecucao, 'Tamanho Vetor': tamanhoVetor}
             df = pandas.DataFrame(dicionario)
             print(df)
-            nomeArquivo = 'C:\\Users\\kauan\\OneDrive\\Área de Trabalho\\Unesp-Loche\\segundo ano\\Segundo Semestre\\POOII - Escola\\TrabalhoPraticoPAA\\CSVs\\' + 'Resultado' + tipoVetorDicionario[int(tipo)] + nomeAlgoritmo + '.csv'
+            nomeArquivo = 'C:\\Users\\user\\OneDrive - Unesp\\Documentos\\GitHub\\TrabalhoPraticoPAA\\CSVs\\' + 'Resultado' + tipoVetorDicionario[int(tipo)] + nomeAlgoritmo + '.csv'
             df.to_csv(nomeArquivo)
             return nomeArquivo
         print(' ({})'.format(i))
