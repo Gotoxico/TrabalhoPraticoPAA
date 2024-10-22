@@ -618,9 +618,9 @@ if __name__ == "__main__":
     # plt.plot(df['Tamanho Vetor'], df['tempoExecucao'], marker='o', linestyle='-', color='b', label='Shell Sort Teorema 2')
 
  
-    nomeDiretorio = input('Digite o nome do diretório onde os arquivos CSV estão localizados: ')
+    #nomeDiretorio = input('Digite o nome do diretório onde os arquivos CSV estão localizados: ')
     # Diretório onde os arquivos CSV estão localizados
-    diretorio = f'C:/Users/kauan/OneDrive/Área de Trabalho/Unesp-Loche/segundo ano/Segundo Semestre/POOII - Escola/TrabalhoPraticoPAA/CSVs/{nomeDiretorio}'
+    diretorio = f'C:/Users/rodri/OneDrive - Unesp/Documentos/GitHub/TrabalhoPraticoPAA/CSVs/TodosDecrescentes'
 
     # Listar todos os arquivos CSV no diretório
     arquivos_csv = [arq for arq in os.listdir(diretorio) if arq.endswith('.csv')]
