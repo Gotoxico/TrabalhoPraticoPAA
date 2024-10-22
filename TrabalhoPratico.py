@@ -6,6 +6,10 @@ import matplotlib.pyplot as plt
 from math import floor
 from scipy.interpolate import make_interp_spline
 import time
+import os
+import re
+
+
 
 #import sys
 
@@ -541,7 +545,8 @@ def menuDeExecucao():
     tipo = input("Escolha o tipo de array: ")
     return opcao, tipo
 
-
+def adicionar_espacos(texto):
+        return re.sub(r'([a-z])([A-Z])', r'\1 \2', texto)
 
 if __name__ == "__main__":
     '''
@@ -569,17 +574,78 @@ if __name__ == "__main__":
     plt.ylabel('Tempo de Execução (Segundos)')
     plt.legend()
     plt.show()'''
-    
-    df = pandas.read_csv("C:\\Users\\rodri\\OneDrive - Unesp\\Documentos\\GitHub\\TrabalhoPraticoPAA\\CSVs\\ShellSortTeorema2\\ResultadoDecrescenteShell Sort Teorema 2.csv")
-    plt.figure(figsize=(10, 6))
-    plt.plot(df['Tamanho Vetor'], df['tempoExecucao'], marker='o', linestyle='-', color='b', label='Shell Sort Teorema 2')
+    #     print('Escolha qual(is) gráfico(s) deseja construir:')
+    #     print('1 - Bubble Sort sem melhorias')
+    #     print('2 - Bubble Sort com melhorias')
+    #     print('3 - Quick Sort com pivô elemento inicial')
+    #     print('4 - Quick Sort com pivô elemento central')
+    #     print('5 - Insertion Sort')
+    #     print('6 - Shell Sort Teorema 1')
+    #     print('7 - Shell Sort Teorema 2')
+    #     print('8 - Selection Sort')
+    #     print('9 - Heap Sort')
+    #     print('10 - Merge Sort')
+    #     print('11 - Sair')
+    #     opcao = input('Escolha: ')
+    #     if opcao == '11':
+    #         break
+    #     if opcao == '1':
+    #         nomeArquivo =  'BubbleSortSemMelhorias'
+    #     elif opcao == '2':
+    #         nomeArquivo = 'BubbleSortComMelhorias'
+    #     elif opcao == '3':
+    #         nomeArquivo = 'QuickSortPivoInicial'
+    #     elif opcao == '4':
+    #         nomeArquivo = 'QuickSortPivoCentral'
+    #     elif opcao == '5':
+    #         nomeArquivo = 'InsertionSort'
+    #     elif opcao == '6':
+    #         nomeArquivo = 'ShellSortTeorema1'
+    #     elif opcao == '7':
+    #         nomeArquivo = 'ShellSortTeorema2'
+    #     elif opcao == '8':
+    #         nomeArquivo = 'SelectionSort'
+    #     elif opcao == '9':
+    #         nomeArquivo = 'HeapSort'
+    #     elif opcao == '10':
+    #         nomeArquivo = 'MergeSort'
+        
 
-    # Adding labels and title
+ 
+    nomeDiretorio = input('Digite o nome do diretório onde os arquivos CSV estão localizados: ')
+    # Diretório onde os arquivos CSV estão localizados
+    diretorio = f'C:/Users/kauan/OneDrive/Área de Trabalho/Unesp-Loche/segundo ano/Segundo Semestre/POOII - Escola/TrabalhoPraticoPAA/CSVs/{nomeDiretorio}'
+
+    # Listar todos os arquivos CSV no diretório
+    arquivos_csv = [arq for arq in os.listdir(diretorio) if arq.endswith('.csv')]
+
+    # Iterar sobre cada arquivo CSV
+    for arquivo in arquivos_csv:
+        caminho_arquivo = os.path.join(diretorio, arquivo)
+        
+        # Ler o CSV
+        df = pandas.read_csv(caminho_arquivo)
+        
+        # Suavizar a coluna 'tempoExecucao' com média móvel exponencialmente ponderada
+        df['Tempo Execucao'] = df['tempoExecucao'].ewm(span=10, adjust=False).mean()
+
+        # Preencher valores NaN que podem ter sido gerados pela suavização
+        df['Tempo Execucao'] = df['Tempo Execucao'].bfill()
+
+        # Plotar os dados suavizados com marcador 'o' e linha contínua '-'
+        plt.plot(df['Tamanho Vetor'], df['Tempo Execucao'], linestyle='-', label=adicionar_espacos(arquivo[:-4]))
+
+    # Ajustar o grid e os intervalos do eixo x
+    plt.xticks(np.arange(0, 56000, 5000))  # Marcas no eixo x de 5000 em 5000
+    plt.grid(True, which='both', axis='both', linestyle='-', linewidth=0.7)
+
+    # Adicionar legenda, título e rótulos
+    plt.legend()
+    titulo = input('Digite o título do gráfico: ')
+    plt.title(titulo, fontsize=14)
     plt.xlabel('Tamanho do Vetor', fontsize=12)
     plt.ylabel('Tempo de Execução (segundos)', fontsize=12)
-    plt.title('Desempenho do Shell Sort Teorema 2', fontsize=14)
-    plt.legend()
 
-    # Show the plot
-    plt.grid(True)
+    # Exibir o gráfico com tamanho adequado
+    plt.figure(figsize=(10, 6))
     plt.show()

@@ -1,0 +1,11 @@
+,Algoritmo,tempoExecucao,Tamanho Vetor
+0,Quick Sort com pivô elemento central,0.000676499999826774,1000
+1,Quick Sort com pivô elemento central,0.0022166999988257885,3000
+2,Quick Sort com pivô elemento central,0.006582900008652359,6000
+3,Quick Sort com pivô elemento central,0.008793899993179366,10000
+4,Quick Sort com pivô elemento central,0.014767499989829957,15000
+5,Quick Sort com pivô elemento central,0.019282099994597957,21000
+6,Quick Sort com pivô elemento central,0.03201930000795983,28000
+7,Quick Sort com pivô elemento central,0.04762060000211932,36000
+8,Quick Sort com pivô elemento central,0.046967600006610155,45000
+9,Quick Sort com pivô elemento central,0.058959900023182854,55000

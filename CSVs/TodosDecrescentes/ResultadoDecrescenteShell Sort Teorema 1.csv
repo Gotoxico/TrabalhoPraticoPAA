@@ -1,0 +1,11 @@
+,Algoritmo,tempoExecucao,Tamanho Vetor
+0,Shell Sort Teorema 1,0.04020330000003014,1000
+1,Shell Sort Teorema 1,0.4844011999999793,3000
+2,Shell Sort Teorema 1,1.8964326000000256,6000
+3,Shell Sort Teorema 1,5.36051980000002,10000
+4,Shell Sort Teorema 1,10.911740200000054,15000
+5,Shell Sort Teorema 1,19.941609700000072,21000
+6,Shell Sort Teorema 1,36.116036500000064,28000
+7,Shell Sort Teorema 1,59.34118639999997,36000
+8,Shell Sort Teorema 1,93.08475180000005,45000
+9,Shell Sort Teorema 1,146.5282188,55000
