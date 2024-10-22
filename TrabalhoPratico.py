@@ -610,7 +610,7 @@ if __name__ == "__main__":
     #     elif opcao == '10':
     #         nomeArquivo = 'MergeSort'
         
-    plt.show()
+    # plt.show()
     
     
     # df = pandas.read_csv("C:\\Users\\user\\OneDrive - Unesp\\Documentos\\GitHub\\TrabalhoPraticoPAA\\CSVs\\ShellSortTeorema2\\ResultadoAleatórioShell Sort Teorema 2.csv")
