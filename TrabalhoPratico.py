@@ -537,7 +537,7 @@ def criarArray(opcao, tamanho):
 
 def menuDeExecucao():
     print("\n\nINICIO DA EXECUCAO\n\n")
-    print("1 - Bubble Sort sem melhorias\n2 - Bubble Sort com melhorias\n3 - Quick Sort com pivô elemento inicial\n4 - Quick Sort com pivô elemento central\n5 - Insertion Sort\n6 - Shell Sort\n7 - Selection Sort\n8 - Heap Sort\n9 - Merge Sort\n10 - Sair\n")
+    print("0 - Tim (Python)\n1 - Bubble Sort sem melhorias\n2 - Bubble Sort com melhorias\n3 - Quick Sort com pivô elemento inicial\n4 - Quick Sort com pivô elemento central\n5 - Insertion Sort\n6 - Shell Sort\n7 - Selection Sort\n8 - Heap Sort\n9 - Merge Sort\n10 - Sair\n")
     opcao = input("Escolha qual algoritmo será executado: ")
     if opcao == '10':
         return 10, 0
@@ -610,6 +610,12 @@ if __name__ == "__main__":
     #     elif opcao == '10':
     #         nomeArquivo = 'MergeSort'
         
+    plt.show()
+    
+    
+    # df = pandas.read_csv("C:\\Users\\user\\OneDrive - Unesp\\Documentos\\GitHub\\TrabalhoPraticoPAA\\CSVs\\ShellSortTeorema2\\ResultadoAleatórioShell Sort Teorema 2.csv")
+    # plt.figure(figsize=(10, 6))
+    # plt.plot(df['Tamanho Vetor'], df['tempoExecucao'], marker='o', linestyle='-', color='b', label='Shell Sort Teorema 2')
 
  
     nomeDiretorio = input('Digite o nome do diretório onde os arquivos CSV estão localizados: ')
