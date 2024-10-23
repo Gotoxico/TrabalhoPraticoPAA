@@ -620,7 +620,7 @@ if __name__ == "__main__":
  
     #nomeDiretorio = input('Digite o nome do diretório onde os arquivos CSV estão localizados: ')
     # Diretório onde os arquivos CSV estão localizados
-    diretorio = f'C:/Users/rodri/OneDrive - Unesp/Documentos/GitHub/TrabalhoPraticoPAA/CSVs/TimSort (Python)'
+    diretorio = f'C:/Users/user/OneDrive - Unesp/Documentos/GitHub/TrabalhoPraticoPAA/CSVs/TodosDecrescentes/Sobrepostos'
 
     # Listar todos os arquivos CSV no diretório
     arquivos_csv = [arq for arq in os.listdir(diretorio) if arq.endswith('.csv')]
