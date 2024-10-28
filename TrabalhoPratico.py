@@ -363,7 +363,7 @@ def menu(opcao, tipo):
     tamanhoVetor = []
     tamanhoArray = 0
     while True:
-        tamanhoArray += i * 1000
+        tamanhoArray += i * 1000000
 
         array = criarArray(tipo, tamanhoArray)
         arrayOrdenadoMerge = []
@@ -549,7 +549,7 @@ def adicionar_espacos(texto):
         return re.sub(r'([a-z])([A-Z])', r'\1 \2', texto)
 
 if __name__ == "__main__":
-    '''
+    
     opcao = 0
     tipo = 0
     tipoVetorDicionario = {
@@ -573,7 +573,7 @@ if __name__ == "__main__":
     plt.xlabel('Tamanho Vetor')
     plt.ylabel('Tempo de Execução (Segundos)')
     plt.legend()
-    plt.show()'''
+    plt.show()
     #     print('Escolha qual(is) gráfico(s) deseja construir:')
     #     print('1 - Bubble Sort sem melhorias')
     #     print('2 - Bubble Sort com melhorias')
@@ -618,7 +618,7 @@ if __name__ == "__main__":
     # plt.plot(df['Tamanho Vetor'], df['tempoExecucao'], marker='o', linestyle='-', color='b', label='Shell Sort Teorema 2')
 
  
-    #nomeDiretorio = input('Digite o nome do diretório onde os arquivos CSV estão localizados: ')
+    '''nomeDiretorio = input('Digite o nome do diretório onde os arquivos CSV estão localizados: ')
     # Diretório onde os arquivos CSV estão localizados
     diretorio = f'C:/Users/user/OneDrive - Unesp/Documentos/GitHub/TrabalhoPraticoPAA/CSVs/TodosDecrescentes/Sobrepostos'
 
@@ -654,4 +654,4 @@ if __name__ == "__main__":
 
     # Exibir o gráfico com tamanho adequado
     plt.figure(figsize=(10, 6))
-    plt.show()
+    plt.show()'''
