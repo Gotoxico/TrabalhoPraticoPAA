@@ -546,30 +546,27 @@ def menuDeExecucao():
     return opcao, tipo
 
 def adicionar_espacos(texto):
-        return re.sub(r'([a-z])([A-Z])', r'\1 \2', texto)
+    return re.sub(r'([a-z])([A-Z])', r'\1 \2', texto)
 
 if __name__ == "__main__":
+    # Solicitar diretório de arquivos e título do gráfico ao usuário
+    diretorio = input("Informe o diretório onde estão os arquivos CSV: ")
+    titulo_grafico = input("Informe o título do gráfico: ")
     
-    opcao = 0
-    tipo = 0
-    tipoVetorDicionario = {
-        1 : 'Aleatório',
-        2 : 'Crescente',
-        3 : 'Decrescente'
-    }
-    arquivos = []
-    while True:    
-        opcao, tipo = menuDeExecucao()
-        if opcao == 10:
-            break
-        nomeArquivo = menu(opcao , tipo)
-        arquivos.append(nomeArquivo)
+    arquivos = [f for f in os.listdir(diretorio) if f.endswith('.csv')]
+
+    plt.figure(figsize=(10, 6))
     
     for arquivo in arquivos:
-        df = pandas.read_csv(arquivo)
-        nome = df.loc[3, 'Algoritmo']
-        df['Tempo de Execução'] = df['tempoExecucao'].rolling(window=5).mean()  # Ajuste o tamanho da janela 'window' conforme necessário
+        caminho_arquivo = os.path.join(diretorio, arquivo)
+        df = pd.read_csv(caminho_arquivo)
+        
+        nome = df.loc[3, 'Algoritmo']  # Assumindo que o nome do algoritmo está na linha 3 e coluna 'Algoritmo'
+        df['Tempo de Execução'] = df['tempoExecucao'].ewm(span=5).mean()  # Suavização exponencial com span=5
+        
         plt.plot(df['Tamanho Vetor'], df['Tempo de Execução'], label=nome)  # Plotar os dados de cada CSV
+    
+    plt.title(titulo_grafico)
     plt.xlabel('Tamanho Vetor')
     plt.ylabel('Tempo de Execução (Segundos)')
     plt.legend()
