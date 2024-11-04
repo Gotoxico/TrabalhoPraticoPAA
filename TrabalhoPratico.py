@@ -363,7 +363,7 @@ def menu(opcao, tipo):
     tamanhoVetor = []
     tamanhoArray = 0
     while True:
-        tamanhoArray += i * 1000000
+        tamanhoArray += i * 1000
 
         array = criarArray(tipo, tamanhoArray)
         arrayOrdenadoMerge = []
