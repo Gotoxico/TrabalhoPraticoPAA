@@ -49,7 +49,7 @@ if __name__ == "__main__":
                     break
                 cont += 1
                 if opcao == '0':
-                    nomeAlgoritmo = 'TimSort (Python)'
+                    nomeAlgoritmo = 'Tim Sort (Python)'
                 elif opcao == '1':
                     nomeAlgoritmo = 'Bubble Sort sem melhorias'
                 elif opcao == '2':

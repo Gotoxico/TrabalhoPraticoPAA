@@ -69,7 +69,7 @@ def menu(opcao, tipo):
         arrayOrdenadoMerge = []
     
         if opcao == '0':
-            nomeAlgoritmo = "TimSort (Python)"
+            nomeAlgoritmo = "Tim Sort (Python)"
             tamanhoVetor.append(len(array))
 
             inicio = default_timer()
